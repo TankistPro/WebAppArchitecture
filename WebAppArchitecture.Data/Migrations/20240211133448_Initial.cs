@@ -4,40 +4,41 @@
 
 namespace WebAppArchitecture.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Pages",
+                name: "Directory",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Html = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Html = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pages", x => x.Id);
+                    table.PrimaryKey("PK_Directory", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Material",
                 columns: table => new
                 {
-                    MaterialId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DirectoryId = table.Column<int>(type: "int", nullable: false)
+                    DirectoryId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Html = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Material", x => x.MaterialId);
+                    table.PrimaryKey("PK_Material", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Material_Pages_DirectoryId",
+                        name: "FK_Material_Directory_DirectoryId",
                         column: x => x.DirectoryId,
-                        principalTable: "Pages",
+                        principalTable: "Directory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -54,7 +55,7 @@ namespace WebAppArchitecture.Data.Migrations
                 name: "Material");
 
             migrationBuilder.DropTable(
-                name: "Pages");
+                name: "Directory");
         }
     }
 }

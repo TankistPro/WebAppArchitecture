@@ -21,35 +21,13 @@ namespace WebAppArchitecture.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Material", b =>
-                {
-                    b.Property<int>("MaterialId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaterialId"), 1L, 1);
-
-                    b.Property<int>("DirectoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MaterialId");
-
-                    b.HasIndex("DirectoryId");
-
-                    b.ToTable("Material");
-                });
-
-            modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Page", b =>
+            modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Directory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Html")
                         .HasColumnType("nvarchar(max)");
@@ -59,16 +37,31 @@ namespace WebAppArchitecture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pages");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Page");
+                    b.ToTable("Directory");
                 });
 
-            modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Directory", b =>
+            modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Material", b =>
                 {
-                    b.HasBaseType("WebAppArchitecture.Data.Entityes.Page");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("Directory");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DirectoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Html")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DirectoryId");
+
+                    b.ToTable("Material");
                 });
 
             modelBuilder.Entity("WebAppArchitecture.Data.Entityes.Material", b =>
